@@ -15,7 +15,7 @@ def make_example_config():
 	config.set('Slack', 'ACT_LIKE_ROBOT', 'false')
 	config.set('Slack', 'SLACKBOT_TOKEN', 'xoxp-7789698678-JHfF8jQpfdi5FJkhfoP3xcD2')
 	config.set('Slack', 'SLACK_CHANNEL', 'ugla-grades-watch')
-	with open('settings.example.cfg', 'wb') as configfile:
+	with open('settings.config', 'wb') as configfile:
 	    config.write(configfile)
 
 if __name__ == '__main__':
