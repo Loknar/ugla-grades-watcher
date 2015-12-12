@@ -75,7 +75,7 @@ Amount of seconds between grades checks.
 Slack settings.
 
 #### use_slackbot
-Set to true if you're awesome and have a slack board with your friends and have access to a slackbot on it.
+Set to true if you're awesome and you have a slack board with your friends and have access to a slackbot on it.
 
 #### act_like_robot
 Makes your robot act like one.
