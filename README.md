@@ -52,24 +52,24 @@ Happy waiting for your grades! :blush:
 ### Login
 
 #### ugla_login_provided
-Set to true if you wish to save your login in the config for ease of use.
+Set to true if you wish to save your login in the config for ease of use. If it's false you will be prompted for username and password when you start the script.
 
 #### username
-Your username to ugla.hi.is.
+Your username to ugla.hi.is, providing this is optional, see ugla_login_provided.
 
 #### password
-Your password to ugla.hi.is.
+Your password to ugla.hi.is, providing this is optional, see ugla_login_provided.
 
 ### Watch
 
 #### watch_forever
-Set to true if you want the script to watch for new grades in your ugla.
+Set to true if you want the script to watch for new grades in your ugla. If it's false the script shuts down after checking your grades status once.
 
 #### log_to_terminal
 Set to true if you want to see printed in your command promt / terminal when the script checks for changes.
 
 #### interval
-Amount of seconds between grades checks.
+Amount of seconds between grades checks. Please don't spam our poor Ugla, checking more frequently than once every minute is just rude.
 
 ### Slack
 
@@ -80,7 +80,7 @@ Set to true if you're awesome and you have a slack board with your friends and h
 Makes your robot act like one.
 
 #### slackbot_token
-Your slackbot token.
+Your slack bot token.
 
 #### slack_channel
 Name of the channel you want the slackbot to send notifications to. Note that the slackbot must first be invited to this channel for this to work.
