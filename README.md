@@ -1,5 +1,5 @@
 # ugla-grades-watcher
-Grades watcher script for students in University of Iceland who are impaitiently waiting for their grades.
+Grades watcher script for students in University of Iceland who are impatiently waiting for their grades.
 
 	+---------------------------------------------------------------------------------+
 	| .       .    .         .           .       .           .           .         .  |
