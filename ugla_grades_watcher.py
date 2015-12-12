@@ -188,6 +188,8 @@ if __name__ == '__main__':
 			table_info, session = get_courses_info(session)
 			pretty_table = pretty_table_string(table_info)
 			for column in table_info['columns']:
+				if column[0] not in memory:
+					memory[column[0]] = None
 				if memory[column[0]] != column[3]:
 					msg = '%s\n%s Detected new grade for course %s %s\n```\n%s\n```\n' % (
 						timestamp,
