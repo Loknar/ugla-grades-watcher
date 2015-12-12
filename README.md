@@ -50,7 +50,6 @@ Happy waiting for your grades! :blush:
 ## settings.config
 
 ### Login
-Login settings.
 
 #### ugla_login_provided
 Set to true if you wish to save your login in the config for ease of use.
@@ -62,7 +61,6 @@ Your username to ugla.hi.is.
 Your password to ugla.hi.is.
 
 ### Watch
-Watch settings.
 
 #### watch_forever
 Set to true if you want the script to watch for new grades in your ugla.
@@ -74,7 +72,6 @@ Set to true if you want to see printed in your command promt / terminal when the
 Amount of seconds between grades checks.
 
 ### Slack
-Slack settings.
 
 #### use_slackbot
 Set to true if you're awesome and you have a slack board with your friends and have access to a slackbot on it.
