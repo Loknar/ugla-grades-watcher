@@ -57,7 +57,7 @@ Set to true if you wish to save your login in the config for ease of use.
 Your username to ugla.hi.is.
 
 #### password
-Your password to ugla.hi.i.
+Your password to ugla.hi.is.
 
 ### Watch
 Watch settings.
