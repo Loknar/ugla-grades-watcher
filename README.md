@@ -31,7 +31,8 @@ Grades watcher script for students in University of Iceland who are impaitiently
 	+---------------------------------------------------------------------------------+
 
 ## Requirements
-You need to install [python 2.7 and pip](http://docs.python-guide.org/en/latest/starting/install/win/).
+You need to install [python 2.7 and pip](http://docs.python-guide.org/en/latest/starting/install/win/). You can setup notifications to your phone by creating a free [Slack](https://slack.com/) channel and setup the [android](https://play.google.com/store/apps/details?id=com.Slack&hl=en) or [IOS](https://itunes.apple.com/us/app/slack/id803453959) app on your phone.
+
 Open Command Prompt (for windows) or Terminal (for Mac OS X or GNU/Linux) and navigate to the project folder.
 Install required python modules by typing the following:
 
@@ -42,7 +43,7 @@ Run the watcher:
 
 	python ugla_grades_watcher.py
 
-Happy waiting for your grades.
+For Slack notifications you need to create a slackbot and put the slackbot token in your `settings.config` file. Happy waiting for your grades.
 
 ## settings.config
 
