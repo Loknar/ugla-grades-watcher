@@ -10,7 +10,7 @@ def make_example_config():
 	config.set('Login', 'PASSWORD', 'mypass')
 	config.set('Watch', 'WATCH_FOREVER', 'false')
 	config.set('Watch', 'LOG_TO_TERMINAL', 'false')
-	config.set('Watch', 'INTERVAL', '60')
+	config.set('Watch', 'INTERVAL', '300')
 	config.set('Slack', 'USE_SLACKBOT', 'false')
 	config.set('Slack', 'ACT_LIKE_ROBOT', 'false')
 	config.set('Slack', 'SLACKBOT_TOKEN', 'xoxp-7789698678-JHfF8jQpfdi5FJkhfoP3xcD2')
