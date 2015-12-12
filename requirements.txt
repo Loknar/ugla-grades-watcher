@@ -1,0 +1,5 @@
+requests==2.7.0
+lxml==3.4.2
+prettytable==0.7.2
+unidecode==0.04.18
+slackclient==0.16

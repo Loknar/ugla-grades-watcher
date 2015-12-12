@@ -55,3 +55,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# do not commit settings.config
+settings.config
