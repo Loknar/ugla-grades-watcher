@@ -43,7 +43,9 @@ Run the watcher:
 
 	python ugla_grades_watcher.py
 
-For Slack notifications you need to create a slackbot and put your slackbot token in your `settings.config` file. Happy waiting for your grades.
+For Slack notifications you need to create a [slack bot](https://api.slack.com/bot-users) ([press here](https://my.slack.com/services/new/bot)) and put the bot API token in your `settings.config` file.
+
+Happy waiting for your grades! :blush:
 
 ## settings.config
 
