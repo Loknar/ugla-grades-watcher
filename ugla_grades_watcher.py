@@ -216,7 +216,13 @@ def watch_grades_forever(session, memory):
 
 def slackbot_msg(message, channel=SLACK_CHANNEL):
 	'''
-	http://bulbapedia.bulbagarden.net/wiki/Slaking
+	Usage:  slackbot_msg(msg, channel)
+	Before: msg is a string containing message we want to send to slack,
+	        channel is the name of the channel we want to post to, if it is not
+	        provided the default channel from config will be used
+	After:  message has been sent to slack
+
+	Note: this may fail silently (prints warning) if connecting to slack fails.
 	'''
 	if ACT_LIKE_ROBOT:
 		message = message.upper()
