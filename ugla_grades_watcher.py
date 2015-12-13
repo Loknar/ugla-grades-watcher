@@ -234,11 +234,11 @@ if __name__ == '__main__':
 	memory = {}
 	for column in table_info['columns']:
 		memory[column[0]] = column[3]
-	if WATCH_FOREVER:
-		print '\nWatching grades forever.\nPress Ctrl + C to stop ...\n'
-	else:
+	if not WATCH_FOREVER:
 		sys.exit()
 	try:
+		print '\nWatching grades forever.'
+		print 'Press Ctrl + C to stop ...\n'
 		watch_grades_forever(session, memory)
 	except KeyboardInterrupt:
 		print 'Stopped.'
