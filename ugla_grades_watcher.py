@@ -73,8 +73,14 @@ HEADER = '''
 
 def ugla_login_success(res):
 	'''
-	Stupid check to see if login was successful.
-	Stupid is as stupid does, and that's all I have to say about that.
+	Usage:  success = ugla_login_success(res)
+	Before: res is a requests response object
+	After:  success is True if login was successful according to res, else False
+
+	When ugla login is successful we get a 302 status code (redirect), the
+	requests module handles redirects automaticly but we're provided with history
+	of it, so we check the history to see if we got 302 status code.
+	When ugla login is not successful we receive 200 status code.
 	'''
 	if len(res.history) > 0 and res.history[0].status_code == 302:
 		return True
@@ -82,7 +88,10 @@ def ugla_login_success(res):
 
 def uniden(mystring):
 	'''
-	https://www.youtube.com/watch?v=G-zHjzgdVkE
+	Usage:  mystring2 = uniden(mystring)
+	Before: mystring is a string, can be str or unicode
+	After:  mystring2 is unidecoded mystring if mystring is unicode,
+	        else mystring2 = mystring
 	'''
 	if isinstance(mystring, unicode):
 		return unidecode(mystring)
@@ -90,7 +99,12 @@ def uniden(mystring):
 
 def login_to_ugla():
 	'''
-	NO TIME TO EXPLAIN
+	Usage:  session = login_to_ugla()
+	Before: nothing
+	After:  session is a requests session object with successful ugla login
+
+	This function asks for login credentials or uses config supplied login based on
+	your config file. It exits the program if login attempt failed.
 	'''
 	session = requests.session()
 	session.get('https://ugla.hi.is/')
@@ -113,13 +127,16 @@ def login_to_ugla():
 	print 'Login successful, checking grades ...\n'
 	return session
 
-def parse_course_table(table):
+def parse_course_table(table_dom):
 	'''
-	HURRY UP
+	Usage:  table_info = parse_course_table(table_dom)
+	Before: table_dom is an lxml etree object of the course table provided on ugla
+	After:  table_info is an object with selected headers and list of matching columns
+	        from the table_dom
 	'''
-	headers = [uniden(x.text) for x in table[0][0]][:5]
+	headers = [uniden(x.text) for x in table_dom[0][0]][:5]
 	columns = []
-	for stuff in table[1]:
+	for stuff in table_dom[1]:
 		number = uniden(stuff[0][0].text)
 		name   = uniden(stuff[1][0].text)
 		ects   = uniden(stuff[2].text)
@@ -134,7 +151,13 @@ def parse_course_table(table):
 
 def get_courses_info(session):
 	'''
-	GET TO THE CHOPPA
+	Usage:  table_info, session = get_courses_info(session)
+	Before: session is a successful requests ugla login session
+	After:  fetched data from ugla,
+	        table_info is an object with parsed courses info data from ugla,
+	        session is an updated ugla login session
+
+	The session must stay active or the login will time out.
 	'''
 	res = session.get('https://ugla.hi.is/vk/namskeidin_min.php?sid=40')
 	res.raise_for_status()
@@ -147,12 +170,49 @@ def get_courses_info(session):
 
 def pretty_table_string(table_info):
 	'''
-	if it bleeds, we can kill it
+	Usage:  pretty_table = pretty_table_string(table_info)
+	Before: table_info contains courses info from table on ugla
+	After:  pretty_table is a string containing visually pleasing table with
+	        info from table_info
 	'''
 	mytable = PrettyTable(table_info['headers'])
 	for column in table_info['columns']:
 		mytable.add_row(column)
 	return str(mytable)
+
+def watch_grades_forever(session, memory):
+	'''
+	Usage:  watch_grades_forever(session, memory)
+	Before: session is a successful requests ugla login session,
+	        memory is an object containint course ids as keys and grades as values
+	After:  it never ends
+	'''
+	while True:
+		time.sleep(INTERVAL)
+		timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
+		if LOG_TO_TERMINAL:
+			print '\n%s - Checking grades status ...' % timestamp
+		unchanged = True
+		table_info, session = get_courses_info(session)
+		pretty_table = pretty_table_string(table_info)
+		for column in table_info['columns']:
+			if column[0] not in memory:
+				memory[column[0]] = None
+			if memory[column[0]] != column[3]:
+				msg = '%s\n%s Detected new grade for course %s %s\n```\n%s\n```\n' % (
+					timestamp,
+					':exclamation:',
+					column[0],
+					':exclamation:',
+					pretty_table
+				)
+				print ''
+				print msg
+				slackbot_msg(msg)
+				memory[column[0]] = column[3]
+				unchanged = False
+		if LOG_TO_TERMINAL and unchanged:
+			print '--- no changes detected ---\n'
 
 def slackbot_msg(message, channel=SLACK_CHANNEL):
 	'''
@@ -179,32 +239,7 @@ if __name__ == '__main__':
 	else:
 		sys.exit()
 	try:
-		while WATCH_FOREVER:
-			time.sleep(INTERVAL)
-			timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
-			if LOG_TO_TERMINAL:
-				print '\n%s - Checking grades status ...' % timestamp
-			unchanged = True
-			table_info, session = get_courses_info(session)
-			pretty_table = pretty_table_string(table_info)
-			for column in table_info['columns']:
-				if column[0] not in memory:
-					memory[column[0]] = None
-				if memory[column[0]] != column[3]:
-					msg = '%s\n%s Detected new grade for course %s %s\n```\n%s\n```\n' % (
-						timestamp,
-						':exclamation:',
-						column[0],
-						':exclamation:',
-						pretty_table
-					)
-					print ''
-					print msg
-					slackbot_msg(msg)
-					memory[column[0]] = column[3]
-					unchanged = False
-			if LOG_TO_TERMINAL and unchanged:
-				print '--- no changes detected ---\n'
+		watch_grades_forever(session, memory)
 	except KeyboardInterrupt:
 		print 'Stopped.'
 		sys.exit()
