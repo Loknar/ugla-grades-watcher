@@ -52,7 +52,7 @@ Happy waiting for your grades! :blush:
 ### Login
 
 #### ugla_login_provided
-Set to true if you wish to save your login in the config for ease of use. If it's false you will be prompted for username and password when you start the script.
+Set to true if you save your login credentials in the config for ease of use. If it's false you will be prompted for username and password when you start the script.
 
 #### username
 Your username to ugla.hi.is, providing this is optional, see ugla_login_provided.
